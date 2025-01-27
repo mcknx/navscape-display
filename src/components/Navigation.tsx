@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 const Navigation = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -79,24 +79,30 @@ const Navigation = () => {
           <div className="md:hidden relative">
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex items-center space-x-1 text-sm font-medium text-gray-600 hover:text-blue-600"
+              className={cn(
+                "flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full",
+                "transition-colors duration-200",
+                isMenuOpen 
+                  ? "bg-blue-50 text-blue-600" 
+                  : "text-gray-600 hover:text-blue-600"
+              )}
             >
-              <span>Next: {nextSection.label}</span>
-              <ChevronDown className={cn(
+              {nextSection.label}
+              <ChevronRight className={cn(
                 "h-4 w-4 transition-transform duration-200",
-                isMenuOpen && "transform rotate-180"
+                isMenuOpen && "transform rotate-90"
               )} />
             </button>
 
             {/* Mobile Menu Dropdown */}
             {isMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 border">
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border">
                 {sections.map((section) => (
                   <button
                     key={section.id}
                     onClick={() => scrollToSection(section.id)}
                     className={cn(
-                      "block w-full text-left px-4 py-2 text-sm",
+                      "block w-full text-left px-4 py-2 text-sm transition-colors",
                       activeSection === section.id
                         ? "bg-blue-50 text-blue-600"
                         : "text-gray-600 hover:bg-gray-50"
